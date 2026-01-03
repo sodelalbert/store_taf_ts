@@ -1,39 +1,42 @@
 import assert from "assert";
 import { test } from "../base/base.test.ts";
-import { UserGenerator } from "../utils/user.generator.ts";
 
 test.describe("User Registration", () => {
-  test("Succesfull User Registration", async ({ homePage, registerPage }) => {
+  test("Succesfull User Registration", async ({
+    userData,
+    homePage,
+    registerPage,
+  }) => {
     await homePage.goto();
     await homePage.goToRegisterPage();
 
     await registerPage.register(
-      UserGenerator.generateFirstName(),
-      UserGenerator.generateLastName(),
-      UserGenerator.generateEmail(),
-      UserGenerator.generatePassword()
+      userData.firstName,
+      userData.lastName,
+      userData.email,
+      userData.password
     );
 
-    assert.strictEqual(
-      await registerPage.isValidationSuccessful(),
-      true,
-      "Validation errors should not be present"
-    );
+    assert.strictEqual(await registerPage.isUserRegistered(), true);
   });
 
-  test("User Email Validation Test", async ({ homePage, registerPage }) => {
+  test("User Email Validation Test", async ({
+    userData,
+    homePage,
+    registerPage,
+  }) => {
     await homePage.goto();
     await homePage.goToRegisterPage();
 
-    await registerPage.fillFirstName(UserGenerator.generateFirstName());
-    await registerPage.fillLastName(UserGenerator.generateLastName());
-    await registerPage.fillEmail(UserGenerator.generateInvalidEmail());
-    await registerPage.fillPassword(UserGenerator.generatePassword());
+    await registerPage.fillFirstName(userData.firstName);
+    await registerPage.fillLastName(userData.lastName);
+    await registerPage.fillEmail(userData.invalidEmail);
+    await registerPage.fillPassword(userData.password);
 
-    const errors = await registerPage.getValidationErrors();
+    const validationErrors = await registerPage.getValidationErrors();
 
-    assert.ok(
-      errors.includes("Wrong email"),
+    assert(
+      validationErrors.includes("Wrong email"),
       "Expected validation error for invalid email"
     );
   });

@@ -14,6 +14,8 @@ export class RegisterPage {
 
   readonly $registerButton: Locator;
 
+  readonly continueButton: Locator;
+
   constructor(page: Page) {
     this.page = page;
 
@@ -26,6 +28,8 @@ export class RegisterPage {
     this.$confirmPasswordInput = page.locator("input#ConfirmPassword");
 
     this.$registerButton = page.locator("input#register-button");
+
+    this.continueButton = page.locator(".button-1.register-continue-button");
   }
 
   public async selectGenderMale() {
@@ -54,6 +58,10 @@ export class RegisterPage {
 
   public async clickRegisterButton() {
     await this.$registerButton.click();
+  }
+
+  public async clickContinueButton() {
+    await this.continueButton.click();
   }
 
   public async register(
