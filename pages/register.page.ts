@@ -1,4 +1,3 @@
-import { read } from "node:fs";
 import { Locator, Page } from "playwright-core";
 
 export class RegisterPage {

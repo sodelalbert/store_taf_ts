@@ -1,6 +1,4 @@
-import assert from "assert";
 import { test } from "../base/base.test.ts";
-import { UserGenerator } from "../utils/user-generator.ts";
 
 test.describe("Login / Session", () => {
   test("Login with valid credentials", async ({

@@ -15,5 +15,4 @@ export const test = base.extend<myFixtures>({
 
 - POM Classes `home-page.ts`, `register-page.ts` and others located in the `pages` directory.
 
-
 - User Data Generation using fixtures. User data is generated once per test and made available via the `userData` fixture see `base.test.ts` & `user-generator.ts`.
