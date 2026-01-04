@@ -8,7 +8,7 @@ test.describe("User Registration", () => {
     registerPage,
   }) => {
     await homePage.goto();
-    await homePage.goToRegisterPage();
+    await homePage.cllickRegister();
 
     await registerPage.register(
       userData.firstName,
@@ -26,7 +26,7 @@ test.describe("User Registration", () => {
     registerPage,
   }) => {
     await homePage.goto();
-    await homePage.goToRegisterPage();
+    await homePage.cllickRegister();
 
     await registerPage.fillFirstName(userData.firstName);
     await registerPage.fillLastName(userData.lastName);

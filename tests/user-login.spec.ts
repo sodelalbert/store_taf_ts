@@ -1,13 +1,15 @@
+import assert from "assert";
 import { test } from "../base/base.test.ts";
 
 test.describe("Login / Session", () => {
   test("Login with valid credentials", async ({
+    page,
     userData,
     homePage,
     registerPage,
   }) => {
     await homePage.goto();
-    await homePage.goToRegisterPage();
+    await homePage.cllickRegister();
 
     await registerPage.register(
       userData.firstName,
@@ -16,6 +18,11 @@ test.describe("Login / Session", () => {
       userData.password
     );
     await registerPage.clickContinueButton();
-    await registerPage.page.reload();
+
+    await page.reload();
+    assert.strictEqual(await homePage.getLoggedInUser(), userData.email);
+
+    await homePage.cllickLogout();
+    assert.strictEqual(await homePage.getLoggedInUser(), null);
   });
 });
