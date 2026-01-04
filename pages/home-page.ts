@@ -11,6 +11,9 @@ export class HomePage {
 
   readonly $loggedInUserAccount: Locator;
 
+  readonly $searchBox: Locator;
+  readonly $searchButton: Locator;
+
   constructor(page: Page) {
     this.page = page;
     this.$registerLink = page.locator("a.ico-register");
@@ -19,6 +22,9 @@ export class HomePage {
     this.$shoppingCartLink = page.locator("a.ico-cart");
 
     this.$loggedInUserAccount = page.locator(".header-links a.account").first();
+
+    this.$searchBox = page.locator("input#small-searchterms");
+    this.$searchButton = page.locator("input.button-1.search-box-button");
   }
 
   public async goto() {
@@ -46,5 +52,10 @@ export class HomePage {
       return this.$loggedInUserAccount.textContent();
     }
     return null;
+  }
+
+  public async searchFor(searchPhrase: string) {
+    await this.$searchBox.fill(searchPhrase);
+    await this.$searchButton.click();
   }
 }

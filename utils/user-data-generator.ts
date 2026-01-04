@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
 
-export class UserGenerator {
+export class UserDataGenerator {
   readonly firstName: string;
   readonly lastName: string;
   readonly email: string;

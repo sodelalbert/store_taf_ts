@@ -6,8 +6,12 @@ dotenv.config({ path: path.resolve(__dirname, ".env"), quiet: true });
 
 export default defineConfig({
   testDir: "./tests",
+
   fullyParallel: true,
+  workers: "100%",
   reporter: "html",
+
+  timeout: 10000,
 
   use: {
     headless: process.env.HEADLESS === "true",
