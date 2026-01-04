@@ -1,6 +1,6 @@
 import { test as base } from "@playwright/test";
-import { HomePage } from "../pages/home.page";
-import { RegisterPage } from "../pages/register.page";
+import { HomePage } from "../pages/home-page";
+import { RegisterPage } from "../pages/register-page";
 import { UserGenerator } from "../utils/user-generator";
 
 type myFixtures = {
