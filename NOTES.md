@@ -1,6 +1,29 @@
 # Features
 
+- TODO: Implement return methods for all the mentods!
+- TODO: Type script typing check.
+- TODO: Consider models for Users and Product Items
+
+```text
+  > class: search-results
+
+  > profuct-item
+  >> href
+  >> href-text
+  >> price
+  >> old-price
+  >> actual-price
+  >> add-to-cart-button
+  >> add-to-cart
+```
+
+- TODO: Add assertions to verify search results based on price range
+
+---
+
 - Clean Code principles applied in POM classes and test files. Inspired by "Clean Code" by Robert C. Martin. Some christmass presnets are just on point! 😊
+
+- Dotenv configuration via `dotenv` package and `.env` file for sensitive data management readiness.
 
 - Custom fixtures `base.test.ts` that provide page objects to tests:
 
@@ -15,7 +38,7 @@ export const test = base.extend<myFixtures>({
 });
 ```
 
-- Unique usser data generation per test via `userData` fixture, see `base.test.ts` & `user-generator.ts`.
+- Unique usser data generation per test via `userData` fixture utilizing faker library, see `base.test.ts` & `user-data-generator.ts`.
 
 - POM Classes `search-page.ts`, `home-page.ts`, `register-page.ts` and others located in the `pages` directory.
   - Locators are defined as private members.

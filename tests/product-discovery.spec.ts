@@ -3,11 +3,7 @@ import { test } from "../base/base.test.ts";
 import { SearchCategories } from "../pages/search-page.ts";
 
 test.describe("Product Discovery", () => {
-  test("Search Page Basic Operations", async ({
-    page,
-    homePage,
-    searchPage,
-  }) => {
+  test("Search and filter", async ({ homePage, searchPage }) => {
     await homePage.goto();
     await homePage.searchFor("laptop");
 
@@ -40,14 +36,9 @@ test.describe("Product Discovery", () => {
     await searchPage.enterPriceRange(20, 100);
     await searchPage.clickSearchButton();
 
-    // TODO: Add assertions to verify search results based on price range
   });
 
-  test("Search and filter", async ({ page, homePage, searchPage }) => {
-    await homePage.goto();
-  });
-
-  test("Browse categories", async ({ page, homePage, searchPage }) => {
+  test("Browse throuhg categories", async ({ homePage, searchPage }) => {
     await homePage.goto();
   });
 });
