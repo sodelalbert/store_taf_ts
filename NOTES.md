@@ -1,23 +1,11 @@
 # Features
 
-- TODO: Implement return methods for all the mentods!
-- TODO: Type script typing check.
-- TODO: Consider models for Users and Product Items
+- [ ] Implement return methods for all the mentods!
+- [ ] Type script typing check.
+- [x] Consider models for Product Items
 
-```text
-  > class: search-results
-
-  > profuct-item
-  >> href
-  >> href-text
-  >> price
-  >> old-price
-  >> actual-price
-  >> add-to-cart-button
-  >> add-to-cart
-```
-
-- TODO: Add assertions to verify search results based on price range
+- [x] Add assertions to verify search results based on price range
+- [ ] Implement next test.
 
 ---
 

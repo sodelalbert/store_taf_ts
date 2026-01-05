@@ -1,4 +1,5 @@
 import { Locator, Page } from "playwright-core";
+import { ProductItem } from "../models/product-item";
 
 export class SearchCategories {
   static readonly All = "All";
@@ -101,4 +102,14 @@ export class SearchPage {
     await this.setFromPrice(fromPrice);
     await this.setToPrice(toPrice);
   }
+
+  public async getSearchResultsList(): Promise<ProductItem[]> {
+    const productLocators = await this.page.locator(".product-item").all();
+    return productLocators.map((locator) => new ProductItem(locator));
+  }
+
+  public async getSearchResultsCount(): Promise<number> {
+    return this.page.locator(".product-item").count();
+  }
+
 }
