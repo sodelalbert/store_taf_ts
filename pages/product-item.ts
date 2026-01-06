@@ -19,39 +19,22 @@ export class ProductItem {
     );
   }
 
-  public async getTitle() {
-    return this.$productTitle.textContent();
+  public async getProductId(): Promise<number> {
+    const idAttr = await this.root.getAttribute("data-productid");
+    return idAttr ? parseInt(idAttr) : NaN;
   }
 
-  public async getURL() {
+  public async getTitle(): Promise<string> {
+    return (await this.$productTitle.textContent()) || "";
+  }
+
+  public async getURL(): Promise<string | null> {
     return this.$productURL.getAttribute("href");
   }
 
-  public async getActualPrice() {
+  public async getActualPrice(): Promise<number | null> {
     const actualPriceText = await this.$actualPrice.textContent();
     if (!actualPriceText) return null;
     return parseFloat(actualPriceText.replace(/[^0-9.]/g, ""));
-  }
-
-  public async getOldPrice() {
-    return this.$oldPrice.textContent();
-  }
-
-  public async addToCart() {
-    const responsePromise = this.root
-      .page()
-      .waitForResponse(
-        (response) =>
-          response.url().includes("/addproducttocart/") &&
-          response.status() === 200
-      );
-    await this.$addToCartButton.click();
-    await responsePromise;
-  }
-
-  public async isActualPriceInPriceRange(minPrice: number, maxPrice: number) {
-    const actualPrice = await this.getActualPrice();
-    if (actualPrice === null) return false;
-    return actualPrice >= minPrice && actualPrice <= maxPrice;
   }
 }

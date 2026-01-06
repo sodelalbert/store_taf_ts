@@ -1,9 +1,13 @@
 import { Locator, Page } from "playwright-core";
-import { ProductItem } from "../models/product-item";
+import { ProductItem } from "./product-item";
 import { SearchCategories } from "../models/search-categories";
+import { ProductData } from "../models/product-data";
+import { CartTracker } from "../utils/cart-tracker.";
+import { get } from "node:http";
 
 export class SearchPage {
   readonly page: Page;
+  readonly cartTracker: CartTracker;
 
   readonly $searchTextInput: Locator;
   readonly $searchButton: Locator;
@@ -15,8 +19,10 @@ export class SearchPage {
 
   readonly $shoppingCartLink: Locator;
 
-  constructor(page: Page) {
+  constructor(page: Page, cartTracker: CartTracker) {
     this.page = page;
+    this.cartTracker = cartTracker;
+
     this.$searchTextInput = page.locator("input[type='text'].search-text");
     this.$searchButton = page.locator(".button-1.search-button");
     this.$advancedSearchCheckbox = page.locator(".basic-search input#As");
@@ -91,12 +97,79 @@ export class SearchPage {
     await this.setToPrice(toPrice);
   }
 
-  public async getSearchResultsList(): Promise<ProductItem[]> {
-    const productLocators = await this.page.locator(".product-item").all();
-    return productLocators.map((locator) => new ProductItem(locator));
+  public async getProductNameList(): Promise<string[]> {
+    const productNames = this.page.locator(".product-item .product-title");
+    const names = await productNames.allTextContents();
+    return names.map((name) => name.trim());
   }
 
-  public async getSearchResultsCount(): Promise<number> {
+  public async getProductDataByName(productName: string): Promise<ProductData> {
+    const productLocator = this.page
+      .locator(`.product-item:has(.product-title:has-text("${productName}"))`)
+      .first();
+
+    const productItem = new ProductItem(productLocator);
+
+    const details: ProductData = {
+      productId: await productItem.getProductId(),
+      title: await productItem.getTitle(),
+      url: await productItem.getURL(),
+      actualPrice: await productItem.getActualPrice(),
+      quantity: null,
+    };
+
+    return details;
+  }
+
+  public async getAllProductsData(): Promise<ProductData[]> {
+    const productLocators = await this.page.locator(".product-item").all();
+    const productItems = productLocators.map(
+      (locator) => new ProductItem(locator)
+    );
+
+    const productDetailsList: ProductData[] = [];
+
+    for (const productItem of productItems) {
+      const details: ProductData = {
+        productId: await productItem.getProductId(),
+        title: await productItem.getTitle(),
+        url: await productItem.getURL(),
+        actualPrice: await productItem.getActualPrice(),
+        quantity: null,
+      };
+      productDetailsList.push(details);
+    }
+    return productDetailsList;
+  }
+
+  public async getProductCount(): Promise<number> {
     return this.page.locator(".product-item").count();
   }
+
+  public async addToCartByName(productName: string): Promise<void> {
+    
+    const productLocator = this.page.locator(
+      `.product-item:has(.product-title a:text-is("${productName}"))`
+    );
+    const addToCartButton = productLocator.locator(
+      "input.product-box-add-to-cart-button[type='button']"
+    );
+
+    const responsePromise = this.page.waitForResponse(
+      response => response.url().includes('/addproducttocart/') && response.status() === 200
+    );
+
+    if (!(await addToCartButton.isVisible())) {
+      throw new Error(`Add to cart button not found for product: ${productName}`);
+    }
+
+    this.cartTracker.addProductToTracking(
+      await this.getProductDataByName(productName)
+    );
+
+    
+    await addToCartButton.click();
+    await responsePromise;
+  }
+
 }

@@ -16,8 +16,6 @@
 
 ---
 
-- Clean Code principles applied in POM classes and test files. Inspired by "Clean Code" by Robert C. Martin. Some christmass presnets are just on point! 😊
-
 - Dotenv configuration via `dotenv` package and `.env` file for sensitive data management readiness.
 
 - Custom fixtures `base.test.ts` that provide page objects to tests:
@@ -43,14 +41,24 @@ export const test = base.extend<myFixtures>({
   - Methods include error handling for invalid states (e.g., trying to set price range when advanced search is not enabled).
   - Data management is handled via utility classes like `user-data-generator.ts`.
 
-- Network response handling in `product-item.ts` to ensure actions like adding to cart are confirmed via network responses:
+- Network response handling in `search-page.ts` to ensure actions like adding to cart are confirmed via network responses:
 
 ```ts
-  public async addToCart() {
-    const responsePromise = this.root.page().waitForResponse(
+  public async addToCartByName(productName: string): Promise<void> {
+
+    ...
+
+    const responsePromise = this.page.waitForResponse(
       response => response.url().includes('/addproducttocart/') && response.status() === 200
     );
-    await this.$addToCartButton.click();
-    await responsePromise;
+
+    ...
+
+    await addToCartButton.click();
+    await responsePromise; // Wait for the network response to confirm the action.
   }
 ```
+
+- `ProductData` class is used to structure product information consistently across methods and tests. Product Data objects are used to verify search results and other product-related functionalities i.e cart content.
+
+- `CartTracker` class keeps track of products added to cart during tests for verification purposes. CartTracker is added as fixture in `base.test.ts` - same instance per test execution for all pages. Shared object between pages and tests helps to verify cart contents easily.

@@ -3,17 +3,22 @@ import { HomePage } from "../pages/home-page";
 import { RegisterPage } from "../pages/register-page";
 import { UserDataGenerator } from "../utils/user-data-generator";
 import { SearchPage } from "../pages/search-page";
+import { CartTracker } from "../utils/cart-tracker.";
 
 type myFixtures = {
   userData: UserDataGenerator;
   homePage: HomePage;
   registerPage: RegisterPage;
   searchPage: SearchPage;
+  cartTracker: CartTracker;
 };
 
 // Extend the base test with custom fixtures
 
 export const test = base.extend<myFixtures>({
+  cartTracker: async ({}, use) => {
+    await use(new CartTracker());
+  },
   userData: async ({}, use) => {
     await use(new UserDataGenerator());
   },
@@ -23,8 +28,8 @@ export const test = base.extend<myFixtures>({
   registerPage: async ({ page }, use) => {
     await use(new RegisterPage(page));
   },
-  searchPage: async ({ page }, use) => {
-    await use(new SearchPage(page));
+  searchPage: async ({ page, cartTracker }, use) => {
+    await use(new SearchPage(page, cartTracker));
   },
 });
 

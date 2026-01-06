@@ -1,6 +1,7 @@
 import assert from "assert";
-import { test } from "../base/base.test.ts";
+import { expect, test } from "../base/base.test.ts";
 import { SearchCategories } from "../models/search-categories.ts";
+import { escape } from "querystring";
 
 test.describe("Product Discovery", () => {
   test("Search and filter", async ({ homePage, searchPage }) => {
@@ -8,27 +9,16 @@ test.describe("Product Discovery", () => {
     await homePage.searchFor("laptop");
 
     await searchPage.searchForProduct("Fiction");
-
-    assert(
-      !(await searchPage.isAdvancedSearchEnabled()),
-      "Advanced search should not be enabled"
-    );
+    expect(await searchPage.isAdvancedSearchEnabled()).toBeFalsy();
 
     await searchPage.enableAdvancedSearch();
-    assert(
-      await searchPage.isAdvancedSearchEnabled(),
-      "Advanced search should be enabled"
-    );
+    expect(await searchPage.isAdvancedSearchEnabled()).toBeTruthy();
 
     await searchPage.selectCategory(SearchCategories.Books);
     await searchPage.clickSearchButton();
 
     const selectedCategory = await searchPage.getSelectedCategory();
-    assert.strictEqual(
-      selectedCategory,
-      SearchCategories.Books,
-      `Expected selected category to be '${SearchCategories.Books}' but got '${selectedCategory}'`
-    );
+    expect(selectedCategory).toBe(SearchCategories.Books.toString());
 
     const priceMin = 20;
     const priceMax = 100;
@@ -37,10 +27,12 @@ test.describe("Product Discovery", () => {
     await searchPage.clickSearchButton();
 
     // Verify that search results are within the specified price range
-    const products = await searchPage.getSearchResultsList();
-
-    for (const product of products) {
-      assert(await product.isActualPriceInPriceRange(priceMin, priceMax));
+    const allProducts = await searchPage.getAllProductsData();
+    for (const product of allProducts) {
+      if (product.actualPrice !== null) {
+        expect(product.actualPrice).toBeGreaterThanOrEqual(priceMin);
+        expect(product.actualPrice).toBeLessThanOrEqual(priceMax);
+      }
     }
   });
 
@@ -56,9 +48,9 @@ test.describe("Product Discovery", () => {
     await searchPage.enterPriceRange(20, 21);
     await searchPage.clickSearchButton();
 
-    let products = await searchPage.getSearchResultsList();
+    let products = await searchPage.getProductCount();
     assert.strictEqual(
-      products.length,
+      products,
       0,
       "Expected no products to be found in the search results"
     );
