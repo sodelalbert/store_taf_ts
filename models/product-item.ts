@@ -38,7 +38,11 @@ export class ProductItem {
   }
 
   public async addToCart() {
+    const responsePromise = this.root.page().waitForResponse(
+      response => response.url().includes('/addproducttocart/') && response.status() === 200
+    );
     await this.$addToCartButton.click();
+    await responsePromise;
   }
 
   public async isActualPriceInPriceRange(minPrice: number, maxPrice: number) {

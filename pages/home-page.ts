@@ -8,6 +8,7 @@ export class HomePage {
   readonly $loginLink: Locator;
   readonly $logoutLink: Locator;
   readonly $shoppingCartLink: Locator;
+  readonly $shoppingCartQuantity: Locator;
 
   readonly $loggedInUserAccount: Locator;
 
@@ -20,6 +21,7 @@ export class HomePage {
     this.$loginLink = page.locator("a.ico-login");
     this.$logoutLink = page.locator("a.ico-logout");
     this.$shoppingCartLink = page.locator("a.ico-cart");
+    this.$shoppingCartQuantity = this.$shoppingCartLink.locator(".cart-qty");
 
     this.$loggedInUserAccount = page.locator(".header-links a.account").first();
 
@@ -57,5 +59,12 @@ export class HomePage {
   public async searchFor(searchPhrase: string) {
     await this.$searchBox.fill(searchPhrase);
     await this.$searchButton.click();
+  }
+
+  public async getCartItemCount(): Promise<number> {
+    const cartText = await this.$shoppingCartQuantity.textContent();
+    if (!cartText) return 0;
+    const match = cartText.match(/(\d+)/);
+    return match ? parseInt(match[1], 10) : 0;
   }
 }

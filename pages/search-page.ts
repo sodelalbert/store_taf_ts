@@ -28,6 +28,8 @@ export class SearchPage {
   readonly $fromPriceInput: Locator;
   readonly $toPriceInput: Locator;
 
+  readonly $shoppingCartLink: Locator;
+
   constructor(page: Page) {
     this.page = page;
     this.$searchTextInput = page.locator("input[type='text'].search-text");
@@ -36,6 +38,7 @@ export class SearchPage {
     this.$categoryDropdown = page.locator("select#Cid");
     this.$fromPriceInput = page.locator(".price-from");
     this.$toPriceInput = page.locator(".price-to");
+    this.$shoppingCartLink = page.locator("a.ico-cart").first();
   }
 
   public async enterSearchText(searchText: string) {
@@ -112,4 +115,7 @@ export class SearchPage {
     return this.page.locator(".product-item").count();
   }
 
+  public async clickShoppingCart() {
+    await this.$shoppingCartLink.click();
+  }
 }

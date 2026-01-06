@@ -6,6 +6,7 @@
 
 - [x] Add assertions to verify search results based on price range
 - [ ] Implement next test.
+- [ ] Asserts could be replaced with `expect` from Playwright test library.
 
 ---
 
@@ -29,8 +30,21 @@ export const test = base.extend<myFixtures>({
 - Unique usser data generation per test via `userData` fixture utilizing faker library, see `base.test.ts` & `user-data-generator.ts`.
 
 - POM Classes `search-page.ts`, `home-page.ts`, `register-page.ts` and others located in the `pages` directory.
+
   - Locators are defined as private members.
   - Each POM class encapsulates interactions with a specific page.
   - Dropdown selections, checkbox interactions, and form fillings are abstracted into methods.
   - Methods include error handling for invalid states (e.g., trying to set price range when advanced search is not enabled).
   - Data management is handled via utility classes like `user-data-generator.ts`.
+
+- Network response handling in `product-item.ts` to ensure actions like adding to cart are confirmed via network responses:
+
+```ts
+  public async addToCart() {
+    const responsePromise = this.root.page().waitForResponse(
+      response => response.url().includes('/addproducttocart/') && response.status() === 200
+    );
+    await this.$addToCartButton.click();
+    await responsePromise;
+  }
+```
