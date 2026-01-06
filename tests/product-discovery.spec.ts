@@ -1,6 +1,6 @@
 import assert from "assert";
 import { test } from "../base/base.test.ts";
-import { SearchCategories } from "../pages/search-page.ts";
+import { SearchCategories } from "../models/search-categories.ts";
 
 test.describe("Product Discovery", () => {
   test("Search and filter", async ({ homePage, searchPage }) => {
@@ -8,6 +8,7 @@ test.describe("Product Discovery", () => {
     await homePage.searchFor("laptop");
 
     await searchPage.searchForProduct("Fiction");
+
     assert(
       !(await searchPage.isAdvancedSearchEnabled()),
       "Advanced search should not be enabled"

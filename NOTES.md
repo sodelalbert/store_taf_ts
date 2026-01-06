@@ -5,6 +5,12 @@
 - [x] Consider models for Product Items
 
 - [x] Add assertions to verify search results based on price range
+- [ ] Cart test
+
+- remove all unnecesary code
+- focus on basics
+- use ProductModel
+
 - [ ] Implement next test.
 - [ ] Asserts could be replaced with `expect` from Playwright test library.
 
