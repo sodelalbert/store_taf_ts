@@ -11,6 +11,30 @@ BASE_URL=https://demowebshop.tricentis.com/
 HEADLESS=true
 ```
 
+## Installation
+
+To install the necessary dependencies, run the following command:
+
+```bash
+npm install
+```
+
+## Static Code Analysis and Formatting
+
+This project uses ESLint and Prettier for static code analysis and formatting. You can run the following commands to check and format the code:
+
+```bash
+npm run typecheck
+npm run format
+npm run lint
+```
+
+You can also run all checks at once using:
+
+```bash
+npm run check:all
+```
+
 ## Run Tests
 
 To run the tests for the `store_taf_ts` package, you can use the following command:
