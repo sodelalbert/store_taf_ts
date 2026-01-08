@@ -1,13 +1,8 @@
-import assert from "assert";
-import { test } from "../base/base.test.ts";
+import assert from 'assert';
+import { test } from '../base/base.test';
 
-test.describe("Login / Session", () => {
-  test("Login with valid credentials", async ({
-    page,
-    userData,
-    homePage,
-    registerPage,
-  }) => {
+test.describe('Login / Session', () => {
+  test('Login with valid credentials', async ({ page, userData, homePage, registerPage }) => {
     await homePage.goto();
     await homePage.cllickRegister();
 

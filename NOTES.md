@@ -2,7 +2,8 @@
 
 - [x] Review Implemented code and refine implementation.
 - [x] Implement return methods for all the mentods!
-- [ ] Type script typing check.
+- [x] Type script typing check.
+- [ ] CI integration (GitHub Actions).
 
   **Missing Tests**
 
@@ -29,7 +30,6 @@ export const test = base.extend<myFixtures>({
 - Unique usser data generation per test via `userData` fixture utilizing faker library, see `base.test.ts` & `user-data-generator.ts`.
 
 - POM Classes `search-page.ts`, `home-page.ts`, `register-page.ts` and others located in the `pages` directory.
-
   - Locators are defined as private members.
   - Each POM class encapsulates interactions with a specific page.
   - Dropdown selections, checkbox interactions, and form fillings are abstracted into methods.
@@ -57,3 +57,8 @@ export const test = base.extend<myFixtures>({
 - `ProductData` class is used to structure product information consistently across methods and tests. Product Data objects are used to verify search results and other product-related functionalities i.e cart content.
 
 - `CartTracker` class keeps track of products added to cart during tests for verification purposes. CartTracker is added as fixture in `base.test.ts` - same instance per test execution for all pages. Shared object between pages and tests helps to verify cart contents easily.
+
+- Static Code Analysis and Formatting:
+  - ESLint is configured with TypeScript support and Prettier integration for code quality and consistency.
+  - Prettier is set up to format code automatically via npm scripts.
+  - Linting script added to `package.json` for easy execution.

@@ -1,12 +1,8 @@
-import assert from "assert";
-import { test } from "../base/base.test.ts";
+import assert from 'assert';
+import { test } from '../base/base.test';
 
-test.describe("User Registration", () => {
-  test("Succesfull User Registration", async ({
-    userData,
-    homePage,
-    registerPage,
-  }) => {
+test.describe('User Registration', () => {
+  test('Succesfull User Registration', async ({ userData, homePage, registerPage }) => {
     await homePage.goto();
     await homePage.cllickRegister();
 
@@ -20,11 +16,7 @@ test.describe("User Registration", () => {
     assert.strictEqual(await registerPage.isUserRegistered(), true);
   });
 
-  test("User Email Validation Test", async ({
-    userData,
-    homePage,
-    registerPage,
-  }) => {
+  test('User Email Validation Test', async ({ userData, homePage, registerPage }) => {
     await homePage.goto();
     await homePage.cllickRegister();
 
@@ -35,9 +27,6 @@ test.describe("User Registration", () => {
 
     const validationErrors = await registerPage.getValidationErrors();
 
-    assert(
-      validationErrors.includes("Wrong email"),
-      "Expected validation error for invalid email"
-    );
+    assert(validationErrors.includes('Wrong email'), 'Expected validation error for invalid email');
   });
 });

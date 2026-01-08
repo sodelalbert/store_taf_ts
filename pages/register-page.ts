@@ -1,4 +1,4 @@
-import { Locator, Page } from "playwright-core";
+import { Locator, Page } from 'playwright-core';
 
 export class RegisterPage {
   readonly page: Page;
@@ -18,17 +18,17 @@ export class RegisterPage {
   constructor(page: Page) {
     this.page = page;
 
-    this.$genderMaleRadio = page.locator("input#gender-male");
-    this.$firstNameInput = page.locator("input#FirstName");
-    this.$lastNameInput = page.locator("input#LastName");
-    this.$emailInput = page.locator("input#Email");
+    this.$genderMaleRadio = page.locator('input#gender-male');
+    this.$firstNameInput = page.locator('input#FirstName');
+    this.$lastNameInput = page.locator('input#LastName');
+    this.$emailInput = page.locator('input#Email');
 
-    this.$passwordInput = page.locator("input#Password");
-    this.$confirmPasswordInput = page.locator("input#ConfirmPassword");
+    this.$passwordInput = page.locator('input#Password');
+    this.$confirmPasswordInput = page.locator('input#ConfirmPassword');
 
-    this.$registerButton = page.locator("input#register-button");
+    this.$registerButton = page.locator('input#register-button');
 
-    this.continueButton = page.locator(".button-1.register-continue-button");
+    this.continueButton = page.locator('.button-1.register-continue-button');
   }
 
   public async selectGenderMale(): Promise<void> {
@@ -79,14 +79,14 @@ export class RegisterPage {
   }
 
   public async isUserRegistered(): Promise<boolean> {
-    const resultLocator = this.page.locator("div.result", {
-      hasText: "Your registration completed",
+    const resultLocator = this.page.locator('div.result', {
+      hasText: 'Your registration completed',
     });
     return await resultLocator.isVisible();
   }
 
   public async getValidationErrors(): Promise<string[]> {
-    const errors = this.page.locator("span.field-validation-error");
+    const errors = this.page.locator('span.field-validation-error');
     const errorMessages: string[] = [];
     const count = await errors.count();
     for (let i = 0; i < count; i++) {

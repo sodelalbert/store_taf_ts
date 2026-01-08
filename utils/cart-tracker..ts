@@ -1,4 +1,4 @@
-import { ProductModel } from "../models/product-model";
+import { ProductModel } from '../models/product-model';
 
 // Utility class to track products added to cart during tests
 // Class is using ProductData objects as data structure to store product info
@@ -11,9 +11,7 @@ export class CartTracker {
   }
 
   public addProductToTracking(product: ProductModel): void {
-    const existingProduct = this.products.find(
-      (p) => p.productId === product.productId
-    );
+    const existingProduct = this.products.find((p) => p.productId === product.productId);
 
     if (existingProduct) {
       // If product item already in cart (based on product ID) - update quantity ++
@@ -25,15 +23,9 @@ export class CartTracker {
   }
 
   public decreaseProductQuantity(product: ProductModel): void {
-    const existingProduct = this.products.find(
-      (p) => p.productId === product.productId
-    );
+    const existingProduct = this.products.find((p) => p.productId === product.productId);
 
-    if (
-      existingProduct &&
-      existingProduct.quantity &&
-      existingProduct.quantity > 0
-    ) {
+    if (existingProduct && existingProduct.quantity && existingProduct.quantity > 0) {
       existingProduct.quantity -= 1;
 
       // If quantity = 0 - remove entry from cart tracking
@@ -44,9 +36,7 @@ export class CartTracker {
   }
 
   public removeProductFromTracking(product: ProductModel): void {
-    const index = this.products.findIndex(
-      (p) => p.productId === product.productId
-    );
+    const index = this.products.findIndex((p) => p.productId === product.productId);
     if (index !== -1) {
       this.products.splice(index, 1);
     }
@@ -57,16 +47,12 @@ export class CartTracker {
   }
 
   public getTrackedProductById(productId: number): ProductModel | null {
-    const product = this.products.find(
-      (product) => product.productId === productId
-    );
+    const product = this.products.find((product) => product.productId === productId);
     return product || null;
   }
 
   public getTrackedProductByName(productName: string): ProductModel | null {
-    const product = this.products.find(
-      (product) => product.title === productName
-    );
+    const product = this.products.find((product) => product.title === productName);
     return product || null;
   }
 

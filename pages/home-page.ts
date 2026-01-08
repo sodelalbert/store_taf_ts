@@ -1,4 +1,4 @@
-import { Locator, Page } from "playwright-core";
+import { Locator, Page } from 'playwright-core';
 
 export class HomePage {
   public url = process.env.BASE_URL;
@@ -17,16 +17,16 @@ export class HomePage {
 
   constructor(page: Page) {
     this.page = page;
-    this.$registerLink = page.locator("a.ico-register");
-    this.$loginLink = page.locator("a.ico-login");
-    this.$logoutLink = page.locator("a.ico-logout");
-    this.$shoppingCartLink = page.locator("a.ico-cart");
-    this.$shoppingCartQuantity = this.$shoppingCartLink.locator(".cart-qty");
+    this.$registerLink = page.locator('a.ico-register');
+    this.$loginLink = page.locator('a.ico-login');
+    this.$logoutLink = page.locator('a.ico-logout');
+    this.$shoppingCartLink = page.locator('a.ico-cart');
+    this.$shoppingCartQuantity = this.$shoppingCartLink.locator('.cart-qty');
 
-    this.$loggedInUserAccount = page.locator(".header-links a.account").first();
+    this.$loggedInUserAccount = page.locator('.header-links a.account').first();
 
-    this.$searchBox = page.locator("input#small-searchterms");
-    this.$searchButton = page.locator("input.button-1.search-box-button");
+    this.$searchBox = page.locator('input#small-searchterms');
+    this.$searchButton = page.locator('input.button-1.search-box-button');
   }
 
   public async goto(): Promise<void> {

@@ -1,7 +1,7 @@
-import { Locator, Page } from "playwright-core";
-import { SearchCategoriesModel } from "../models/search-categories-model";
-import { ProductModel } from "../models/product-model";
-import { CartTracker } from "../utils/cart-tracker.";
+import { Locator, Page } from 'playwright-core';
+import { SearchCategoriesModel } from '../models/search-categories-model';
+import { ProductModel } from '../models/product-model';
+import { CartTracker } from '../utils/cart-tracker.';
 
 export class SearchPage {
   readonly page: Page;
@@ -22,12 +22,12 @@ export class SearchPage {
     this.cartTracker = cartTracker;
 
     this.$searchTextInput = page.locator("input[type='text'].search-text");
-    this.$searchButton = page.locator(".button-1.search-button");
-    this.$advancedSearchCheckbox = page.locator(".basic-search input#As");
-    this.$categoryDropdown = page.locator("select#Cid");
-    this.$fromPriceInput = page.locator(".price-from");
-    this.$toPriceInput = page.locator(".price-to");
-    this.$shoppingCartLink = page.locator("a.ico-cart").first();
+    this.$searchButton = page.locator('.button-1.search-button');
+    this.$advancedSearchCheckbox = page.locator('.basic-search input#As');
+    this.$categoryDropdown = page.locator('select#Cid');
+    this.$fromPriceInput = page.locator('.price-from');
+    this.$toPriceInput = page.locator('.price-to');
+    this.$shoppingCartLink = page.locator('a.ico-cart').first();
   }
 
   public async enterSearchText(searchText: string): Promise<void> {
@@ -53,26 +53,22 @@ export class SearchPage {
     }
   }
 
-  public async selectCategory(
-    categoryName: SearchCategoriesModel
-  ): Promise<void> {
+  public async selectCategory(categoryName: SearchCategoriesModel): Promise<void> {
     if (await this.isAdvancedSearchEnabled()) {
       await this.$categoryDropdown.selectOption({
         label: categoryName.toString(),
       });
     } else {
-      throw new Error("Advanced search is not enabled");
+      throw new Error('Advanced search is not enabled');
     }
   }
 
   public async getSelectedCategory(): Promise<string | null> {
     if (await this.isAdvancedSearchEnabled()) {
       const selectedValue = await this.$categoryDropdown.inputValue();
-      return this.$categoryDropdown
-        .locator(`option[value="${selectedValue}"]`)
-        .textContent();
+      return this.$categoryDropdown.locator(`option[value="${selectedValue}"]`).textContent();
     } else {
-      throw new Error("Advanced search is not enabled");
+      throw new Error('Advanced search is not enabled');
     }
   }
 
@@ -80,7 +76,7 @@ export class SearchPage {
     if (await this.isAdvancedSearchEnabled()) {
       await this.$fromPriceInput.fill(fromPrice.toString());
     } else {
-      throw new Error("Advanced search is not enabled");
+      throw new Error('Advanced search is not enabled');
     }
   }
 
@@ -88,27 +84,22 @@ export class SearchPage {
     if (await this.isAdvancedSearchEnabled()) {
       await this.$toPriceInput.fill(toPrice.toString());
     } else {
-      throw new Error("Advanced search is not enabled");
+      throw new Error('Advanced search is not enabled');
     }
   }
 
-  public async enterPriceRange(
-    fromPrice: number,
-    toPrice: number
-  ): Promise<void> {
+  public async enterPriceRange(fromPrice: number, toPrice: number): Promise<void> {
     await this.setFromPrice(fromPrice);
     await this.setToPrice(toPrice);
   }
 
   public async getProductNameList(): Promise<string[]> {
-    const productNames = this.page.locator(".product-item .product-title");
+    const productNames = this.page.locator('.product-item .product-title');
     const names = await productNames.allTextContents();
     return names.map((name) => name.trim());
   }
 
-  public async getProductDataByName(
-    productName: string
-  ): Promise<ProductModel> {
+  public async getProductDataByName(productName: string): Promise<ProductModel> {
     const productLocator = this.page
       .locator(`.product-item:has(.product-title:has-text("${productName}"))`)
       .first();
@@ -127,10 +118,8 @@ export class SearchPage {
   }
 
   public async getAllProductsData(): Promise<ProductModel[]> {
-    const productLocators = await this.page.locator(".product-item").all();
-    const productItems = productLocators.map(
-      (locator) => new ProductItemComponent(locator)
-    );
+    const productLocators = await this.page.locator('.product-item').all();
+    const productItems = productLocators.map((locator) => new ProductItemComponent(locator));
 
     const productDetailsList: ProductModel[] = [];
 
@@ -148,7 +137,7 @@ export class SearchPage {
   }
 
   public async getProductCount(): Promise<number> {
-    return this.page.locator(".product-item").count();
+    return this.page.locator('.product-item').count();
   }
 
   public async addToCartByName(productName: string): Promise<void> {
@@ -160,20 +149,14 @@ export class SearchPage {
     );
 
     const responsePromise = this.page.waitForResponse(
-      (response) =>
-        response.url().includes("/addproducttocart/") &&
-        response.status() === 200
+      (response) => response.url().includes('/addproducttocart/') && response.status() === 200
     );
 
     if (!(await addToCartButton.isVisible())) {
-      throw new Error(
-        `Add to cart button not found for product: ${productName}`
-      );
+      throw new Error(`Add to cart button not found for product: ${productName}`);
     }
 
-    this.cartTracker.addProductToTracking(
-      await this.getProductDataByName(productName)
-    );
+    this.cartTracker.addProductToTracking(await this.getProductDataByName(productName));
 
     await addToCartButton.click();
     await responsePromise;
@@ -189,28 +172,26 @@ export class ProductItemComponent {
   readonly $addToCartButton: Locator;
 
   constructor(private readonly root: Locator) {
-    this.$productTitle = this.root.locator(".product-title a");
-    this.$productURL = this.root.locator(".product-title a");
+    this.$productTitle = this.root.locator('.product-title a');
+    this.$productURL = this.root.locator('.product-title a');
 
-    this.$actualPrice = this.root.locator(".prices .actual-price");
-    this.$oldPrice = this.root.locator(".prices .old-price");
-    this.$addToCartButton = this.root.locator(
-      ".product-box-add-to-cart-button"
-    );
+    this.$actualPrice = this.root.locator('.prices .actual-price');
+    this.$oldPrice = this.root.locator('.prices .old-price');
+    this.$addToCartButton = this.root.locator('.product-box-add-to-cart-button');
   }
 
   public async getProductId(): Promise<number> {
-    const idAttr = await this.root.getAttribute("data-productid");
+    const idAttr = await this.root.getAttribute('data-productid');
     return idAttr ? parseInt(idAttr) : NaN;
   }
 
   public async getTitle(): Promise<string> {
-    return (await this.$productTitle.textContent()) || "";
+    return (await this.$productTitle.textContent()) || '';
   }
 
   public async getURL(): Promise<string> {
-    const href = await this.$productURL.getAttribute("href");
-    return href ?? "";
+    const href = await this.$productURL.getAttribute('href');
+    return href ?? '';
   }
 
   public async getActualPrice(): Promise<number> {

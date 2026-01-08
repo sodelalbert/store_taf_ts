@@ -1,10 +1,10 @@
-import { test as base } from "@playwright/test";
-import { HomePage } from "../pages/home-page";
-import { RegisterPage } from "../pages/register-page";
-import { UserDataGenerator } from "../utils/user-data-generator";
-import { SearchPage } from "../pages/search-page";
-import { CartTracker } from "../utils/cart-tracker.";
-import { CartPage } from "../pages/cart-page";
+import { test as base } from '@playwright/test';
+import { HomePage } from '../pages/home-page';
+import { RegisterPage } from '../pages/register-page';
+import { UserDataGenerator } from '../utils/user-data-generator';
+import { SearchPage } from '../pages/search-page';
+import { CartTracker } from '../utils/cart-tracker.';
+import { CartPage } from '../pages/cart-page';
 
 type myFixtures = {
   userData: UserDataGenerator;
@@ -18,9 +18,11 @@ type myFixtures = {
 // Extend the base test with custom fixtures
 
 export const test = base.extend<myFixtures>({
+  // eslint-disable-next-line no-empty-pattern
   cartTracker: async ({}, use) => {
     await use(new CartTracker());
   },
+  // eslint-disable-next-line no-empty-pattern
   userData: async ({}, use) => {
     await use(new UserDataGenerator());
   },
@@ -38,4 +40,4 @@ export const test = base.extend<myFixtures>({
   },
 });
 
-export { expect } from "@playwright/test";
+export { expect } from '@playwright/test';
