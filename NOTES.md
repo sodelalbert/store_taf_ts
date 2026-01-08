@@ -1,16 +1,13 @@
-# Features
+# Design Considerations and Implementation Notes
 
-- [x] Review Implemented code and refine implementation.
-- [x] Implement return methods for all the mentods!
-- [x] Type script typing check.
-- [ ] CI integration (GitHub Actions).
-
-  **Missing Tests**
+## Tests to be implemented
 
 - [ ] Product Discovery — Path B (Browse / Category / Featured)
 - [ ] Cart Mutations test
 
 ---
+
+## Notes
 
 - Dotenv configuration via `dotenv` package and `.env` file for sensitive data management readiness.
 
@@ -62,3 +59,10 @@ export const test = base.extend<myFixtures>({
   - ESLint is configured with TypeScript support and Prettier integration for code quality and consistency.
   - Prettier is set up to format code automatically via npm scripts.
   - Linting script added to `package.json` for easy execution.
+
+- CI/CD Pipeline:
+  - GitHub Actions workflow configured in `ci.yml` for automated testing.
+  - Runs on push and pull requests to ensure code quality and that **project contributors follow consistent implementation standards**.
+  - Installs dependencies, runs linting, and executes Playwright tests.
+  - Generates and uploads test reports and artifacts for failed tests.
+  - Uses matrix strategy for running tests across multiple environments if needed.

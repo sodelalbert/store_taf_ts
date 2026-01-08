@@ -19,22 +19,6 @@ To install the necessary dependencies, run the following command:
 npm install
 ```
 
-## Static Code Analysis and Formatting
-
-This project uses ESLint and Prettier for static code analysis and formatting. You can run the following commands to check and format the code:
-
-```bash
-npm run typecheck
-npm run format
-npm run lint
-```
-
-You can also run all checks at once using:
-
-```bash
-npm run check:all
-```
-
 ## Run Tests
 
 To run the tests for the `store_taf_ts` package, you can use the following command:
@@ -49,6 +33,22 @@ After executing the tests, you can view the test report by running the following
 
 ```bash
 npx playwright show-report
+```
+
+## Static Code Analysis and Formatting
+
+This project uses ESLint and Prettier for static code analysis and formatting. You can run the following commands to check and format the code:
+
+```bash
+npm run typecheck
+npm run format
+npm run lint
+```
+
+You can also run all checks at once using:
+
+```bash
+npm run check:all
 ```
 
 Failed test cases will contain screenshots,trace files and video recordings for further analysis.
