@@ -1,18 +1,13 @@
 # Features
 
+- [x] Review Implemented code and refine implementation.
 - [ ] Implement return methods for all the mentods!
 - [ ] Type script typing check.
-- [x] Consider models for Product Items
 
-- [x] Add assertions to verify search results based on price range
-- [ ] Cart test
+  **Missing Tests**
 
-- remove all unnecesary code
-- focus on basics
-- use ProductModel
-
-- [ ] Implement next test.
-- [ ] Asserts could be replaced with `expect` from Playwright test library.
+- [ ] Product Discovery — Path B (Browse / Category / Featured)
+- [ ] Cart Mutations test
 
 ---
 

@@ -1,4 +1,4 @@
-export class SearchCategories {
+export class SearchCategoriesModel {
   static readonly All = "All";
   static readonly Books = "Books";
   static readonly Computers = "Computers";

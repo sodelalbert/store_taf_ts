@@ -1,7 +1,6 @@
 import assert from "assert";
 import { expect, test } from "../base/base.test.ts";
-import { SearchCategories } from "../models/search-categories.ts";
-import { escape } from "querystring";
+import { SearchCategoriesModel } from "../models/search-categories-model.ts";
 
 test.describe("Product Discovery", () => {
   test("Search and filter", async ({ homePage, searchPage }) => {
@@ -14,12 +13,11 @@ test.describe("Product Discovery", () => {
     await searchPage.enableAdvancedSearch();
     expect(await searchPage.isAdvancedSearchEnabled()).toBeTruthy();
 
-    await searchPage.selectCategory(SearchCategories.Books);
+    await searchPage.selectCategory(SearchCategoriesModel.Books);
     await searchPage.clickSearchButton();
 
     const selectedCategory = await searchPage.getSelectedCategory();
-    expect(selectedCategory).toBe(SearchCategories.Books.toString());
-
+    expect(selectedCategory).toBe(SearchCategoriesModel.Books.toString());
     const priceMin = 20;
     const priceMax = 100;
 

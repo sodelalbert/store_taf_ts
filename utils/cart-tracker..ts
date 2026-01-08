@@ -1,17 +1,16 @@
-import { ProductData } from "../models/product-data";
-import { ProductItem } from "../pages/product-item";
+import { ProductModel } from "../models/product-model";
 
 // Utility class to track products added to cart during tests
 // Class is using ProductData objects as data structure to store product info
 
 export class CartTracker {
-  private products: ProductData[];
+  private products: ProductModel[];
 
   constructor() {
     this.products = [];
   }
 
-  public addProductToTracking(product: ProductData): void {
+  public addProductToTracking(product: ProductModel): void {
     const existingProduct = this.products.find(
       (p) => p.productId === product.productId
     );
@@ -25,7 +24,7 @@ export class CartTracker {
     }
   }
 
-  public decreaseProductQuantity(product: ProductData): void {
+  public decreaseProductQuantity(product: ProductModel): void {
     const existingProduct = this.products.find(
       (p) => p.productId === product.productId
     );
@@ -44,7 +43,7 @@ export class CartTracker {
     }
   }
 
-  public removeProductFromTracking(product: ProductData): void {
+  public removeProductFromTracking(product: ProductModel): void {
     const index = this.products.findIndex(
       (p) => p.productId === product.productId
     );
@@ -59,21 +58,21 @@ export class CartTracker {
 
   public async getTrackedProductById(
     productId: number
-  ): Promise<ProductData | null> {
+  ): Promise<ProductModel | null> {
     const product = this.products.find(
       (product) => product.productId === productId
     );
     return product || null;
   }
 
-  public getTrackedProductByName(productName: string): ProductData | null {
+  public getTrackedProductByName(productName: string): ProductModel | null {
     const product = this.products.find(
       (product) => product.title === productName
     );
     return product || null;
   }
 
-  public getAllTrackedProducts(): ProductData[] {
+  public getAllTrackedProducts(): ProductModel[] {
     return [...this.products];
   }
 }

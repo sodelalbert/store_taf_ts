@@ -4,6 +4,7 @@ import { RegisterPage } from "../pages/register-page";
 import { UserDataGenerator } from "../utils/user-data-generator";
 import { SearchPage } from "../pages/search-page";
 import { CartTracker } from "../utils/cart-tracker.";
+import { CartPage } from "../pages/cart-page";
 
 type myFixtures = {
   userData: UserDataGenerator;
@@ -11,6 +12,7 @@ type myFixtures = {
   registerPage: RegisterPage;
   searchPage: SearchPage;
   cartTracker: CartTracker;
+  cartPage: CartPage;
 };
 
 // Extend the base test with custom fixtures
@@ -30,6 +32,9 @@ export const test = base.extend<myFixtures>({
   },
   searchPage: async ({ page, cartTracker }, use) => {
     await use(new SearchPage(page, cartTracker));
+  },
+  cartPage: async ({ page }, use) => {
+    await use(new CartPage(page));
   },
 });
 
