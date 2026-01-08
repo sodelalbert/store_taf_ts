@@ -8,7 +8,8 @@ export default defineConfig({
   testDir: './tests',
 
   fullyParallel: true,
-  workers: '100%',
+  workers: process.env.CI ? 1 : undefined,
+  retries: process.env.CI ? 2 : 0,
   reporter: 'html',
 
   timeout: 10000,

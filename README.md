@@ -4,7 +4,7 @@ This repository contains automated tests for the Demo Web Shop application using
 
 ## Configuration
 
-Create a `.env` file in the root directory of the project based on `sample/.env.sample` file and set the following environment variables:
+Create a `.env` file in the root directory of the project based on `sample/.env.example` file and set the following environment variables:
 
 ```env
 BASE_URL=https://demowebshop.tricentis.com/
