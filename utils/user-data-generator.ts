@@ -1,4 +1,4 @@
-import { faker } from '@faker-js/faker';
+import faker from 'faker';
 
 export class UserDataGenerator {
   readonly firstName: string;
@@ -9,10 +9,10 @@ export class UserDataGenerator {
   readonly invalidEmail: string;
 
   constructor() {
-    this.firstName = faker.person.firstName();
-    this.lastName = faker.person.lastName();
+    this.firstName = faker.name.firstName();
+    this.lastName = faker.name.lastName();
     this.email = faker.internet.email();
-    this.password = faker.internet.password({ length: 12 });
+    this.password = faker.internet.password(12);
 
     this.invalidEmail = faker.lorem.word();
   }
