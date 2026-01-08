@@ -16,6 +16,9 @@ export class SearchPage {
   readonly $toPriceInput: Locator;
 
   readonly $shoppingCartLink: Locator;
+  readonly $productItems: Locator;
+  readonly $productTitleElements: Locator;
+  readonly $productTitleLinks: Locator;
 
   constructor(page: Page, cartTracker: CartTracker) {
     this.page = page;
@@ -28,6 +31,10 @@ export class SearchPage {
     this.$fromPriceInput = page.locator('.price-from');
     this.$toPriceInput = page.locator('.price-to');
     this.$shoppingCartLink = page.locator('a.ico-cart').first();
+
+    this.$productItems = page.locator('.product-item');
+    this.$productTitleElements = page.locator('.product-item .product-title');
+    this.$productTitleLinks = page.locator('.product-item .product-title a');
   }
 
   public async enterSearchText(searchText: string): Promise<void> {
@@ -94,14 +101,15 @@ export class SearchPage {
   }
 
   public async getProductNameList(): Promise<string[]> {
-    const productNames = this.page.locator('.product-item .product-title');
-    const names = await productNames.allTextContents();
+    const names = await this.$productTitleElements.allTextContents();
     return names.map((name) => name.trim());
   }
 
   public async getProductDataByName(productName: string): Promise<ProductModel> {
-    const productLocator = this.page
-      .locator(`.product-item:has(.product-title:has-text("${productName}"))`)
+    const productLocator = this.$productItems
+      .filter({
+        has: this.page.locator('.product-title', { hasText: productName }),
+      })
       .first();
 
     const productItem = new ProductItemComponent(productLocator);
@@ -118,7 +126,7 @@ export class SearchPage {
   }
 
   public async getAllProductsData(): Promise<ProductModel[]> {
-    const productLocators = await this.page.locator('.product-item').all();
+    const productLocators = await this.$productItems.all();
     const productItems = productLocators.map((locator) => new ProductItemComponent(locator));
 
     const productDetailsList: ProductModel[] = [];
@@ -137,13 +145,13 @@ export class SearchPage {
   }
 
   public async getProductCount(): Promise<number> {
-    return this.page.locator('.product-item').count();
+    return this.$productItems.count();
   }
 
   public async addToCartByName(productName: string): Promise<void> {
-    const productLocator = this.page.locator(
-      `.product-item:has(.product-title a:text-is("${productName}"))`
-    );
+    const productLocator = this.$productItems.filter({
+      has: this.page.locator('.product-title a', { hasText: productName }),
+    });
     const addToCartButton = productLocator.locator(
       "input.product-box-add-to-cart-button[type='button']"
     );

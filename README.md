@@ -35,7 +35,11 @@ After executing the tests, you can view the test report by running the following
 npx playwright show-report
 ```
 
-## Static Code Analysis and Formatting
+## Github Actions CI/CD
+
+This project is set up with a GitHub Actions workflow for continuous integration and continuous deployment (CI/CD). The workflow is defined in the `.github/workflows/ci.yml` file and is triggered on push and pull request events.
+
+### Static Code Analysis and Formatting
 
 This project uses ESLint and Prettier for static code analysis and formatting. You can run the following commands to check and format the code:
 
@@ -52,3 +56,9 @@ npm run check:all
 ```
 
 Failed test cases will contain screenshots,trace files and video recordings for further analysis.
+
+### Test Execution
+
+The GitHub Actions workflow installs the necessary dependencies, sets up the environment, and runs the Playwright tests. It also generates and uploads test reports and artifacts for failed tests.
+
+Test Report Artifacts (HTML report with embeded screenshots and videos from failed tests) can be accessed from the Actions tab in the GitHub repository after the workflow completes.

@@ -12,8 +12,6 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   reporter: 'html',
 
-  timeout: 10000,
-
   use: {
     headless: process.env.HEADLESS === 'true',
     trace: 'on-first-retry',

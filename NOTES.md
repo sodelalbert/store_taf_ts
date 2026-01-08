@@ -1,14 +1,5 @@
 # Design Considerations and Implementation Notes
 
-## Tests to be implemented
-
-- [ ] Product Discovery — Path B (Browse / Category / Featured)
-- [ ] Cart Mutations test
-
----
-
-## Notes
-
 - Dotenv configuration via `dotenv` package and `.env` file for sensitive data management readiness.
 
 - Custom fixtures `base.test.ts` that provide page objects to tests:
