@@ -1,7 +1,7 @@
 # Features
 
 - [x] Review Implemented code and refine implementation.
-- [ ] Implement return methods for all the mentods!
+- [x] Implement return methods for all the mentods!
 - [ ] Type script typing check.
 
   **Missing Tests**

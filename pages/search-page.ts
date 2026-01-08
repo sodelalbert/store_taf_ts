@@ -30,30 +30,32 @@ export class SearchPage {
     this.$shoppingCartLink = page.locator("a.ico-cart").first();
   }
 
-  public async enterSearchText(searchText: string) {
+  public async enterSearchText(searchText: string): Promise<void> {
     await this.$searchTextInput.fill(searchText);
   }
 
-  public async clickSearchButton() {
+  public async clickSearchButton(): Promise<void> {
     await this.$searchButton.click();
   }
 
-  public async searchForProduct(searchText: string) {
+  public async searchForProduct(searchText: string): Promise<void> {
     await this.enterSearchText(searchText);
     await this.clickSearchButton();
   }
 
-  public isAdvancedSearchEnabled() {
+  public async isAdvancedSearchEnabled(): Promise<boolean> {
     return this.$advancedSearchCheckbox.isChecked();
   }
 
-  public async enableAdvancedSearch() {
+  public async enableAdvancedSearch(): Promise<void> {
     if (!(await this.isAdvancedSearchEnabled())) {
       await this.$advancedSearchCheckbox.check();
     }
   }
 
-  public async selectCategory(categoryName: SearchCategoriesModel) {
+  public async selectCategory(
+    categoryName: SearchCategoriesModel
+  ): Promise<void> {
     if (await this.isAdvancedSearchEnabled()) {
       await this.$categoryDropdown.selectOption({
         label: categoryName.toString(),
@@ -63,7 +65,7 @@ export class SearchPage {
     }
   }
 
-  public async getSelectedCategory() {
+  public async getSelectedCategory(): Promise<string | null> {
     if (await this.isAdvancedSearchEnabled()) {
       const selectedValue = await this.$categoryDropdown.inputValue();
       return this.$categoryDropdown
@@ -74,7 +76,7 @@ export class SearchPage {
     }
   }
 
-  public async setFromPrice(fromPrice: number) {
+  public async setFromPrice(fromPrice: number): Promise<void> {
     if (await this.isAdvancedSearchEnabled()) {
       await this.$fromPriceInput.fill(fromPrice.toString());
     } else {
@@ -82,7 +84,7 @@ export class SearchPage {
     }
   }
 
-  public async setToPrice(toPrice: number) {
+  public async setToPrice(toPrice: number): Promise<void> {
     if (await this.isAdvancedSearchEnabled()) {
       await this.$toPriceInput.fill(toPrice.toString());
     } else {
@@ -90,7 +92,10 @@ export class SearchPage {
     }
   }
 
-  public async enterPriceRange(fromPrice: number, toPrice: number) {
+  public async enterPriceRange(
+    fromPrice: number,
+    toPrice: number
+  ): Promise<void> {
     await this.setFromPrice(fromPrice);
     await this.setToPrice(toPrice);
   }

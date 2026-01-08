@@ -11,8 +11,6 @@ export class CartPage {
 
   constructor(page: Page) {
     this.page = page;
-
-    this.cartItemsLocator = page.locator('[data-test="cart-item"]');
     this.cartItemsLocator = page.locator("tr.cart-item-row");
     this.quantityLocator = page.locator("input.qty-input");
     this.totalPriceLocator = page.locator("span.product-subtotal");
@@ -42,18 +40,17 @@ export class CartPage {
     const totalText = await productRow
       .locator("span.product-subtotal")
       .textContent();
-    if (!totalText) return 0;
-
-    return Number(totalText);
+    return this.parsePrice(totalText);
   }
 
   async getUnitPriceByName(productName: string): Promise<number> {
     const productRow = this.page.locator("tr.cart-item-row").filter({
       has: this.page.locator("a.product-name", { hasText: productName }),
     });
-    return Number(
-      (await productRow.locator("span.product-unit-price").textContent()) || "0"
-    );
+    const priceText = await productRow
+      .locator("span.product-unit-price")
+      .textContent();
+    return this.parsePrice(priceText);
   }
 
   async verifyProductInCart(productName: string): Promise<boolean> {
@@ -61,5 +58,12 @@ export class CartPage {
       has: this.page.locator("a.product-name", { hasText: productName }),
     });
     return (await matchingItems.count()) > 0;
+  }
+
+  private parsePrice(text?: string | null): number {
+    if (!text) return 0;
+    const cleaned = text.replace(/,/g, "").replace(/[^(0-9)\.\-]+/g, "").trim();
+    const n = parseFloat(cleaned);
+    return Number.isFinite(n) ? Math.round(n * 100) / 100 : 0;
   }
 }

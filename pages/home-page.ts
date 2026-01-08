@@ -29,34 +29,34 @@ export class HomePage {
     this.$searchButton = page.locator("input.button-1.search-box-button");
   }
 
-  public async goto() {
+  public async goto(): Promise<void> {
     await this.page.goto(this.url!);
   }
 
-  public async cllickRegister() {
+  public async cllickRegister(): Promise<void> {
     await this.$registerLink.click();
   }
 
-  public async cllickLogin() {
+  public async cllickLogin(): Promise<void> {
     await this.$loginLink.click();
   }
 
-  public async cllickLogout() {
+  public async cllickLogout(): Promise<void> {
     await this.$logoutLink.click();
   }
 
-  public async cllickShoppingCart() {
+  public async cllickShoppingCart(): Promise<void> {
     await this.$shoppingCartLink.click();
   }
 
-  public async getLoggedInUser() {
+  public async getLoggedInUser(): Promise<string | null> {
     if (await this.$loggedInUserAccount.isVisible()) {
-      return this.$loggedInUserAccount.textContent();
+      return await this.$loggedInUserAccount.textContent();
     }
     return null;
   }
 
-  public async searchFor(searchPhrase: string) {
+  public async searchFor(searchPhrase: string): Promise<void> {
     await this.$searchBox.fill(searchPhrase);
     await this.$searchButton.click();
   }

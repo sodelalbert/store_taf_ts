@@ -52,13 +52,11 @@ export class CartTracker {
     }
   }
 
-  public async isProductTracked(productId: number): Promise<boolean> {
+  public isProductTracked(productId: number): boolean {
     return this.products.some((product) => product.productId === productId);
   }
 
-  public async getTrackedProductById(
-    productId: number
-  ): Promise<ProductModel | null> {
+  public getTrackedProductById(productId: number): ProductModel | null {
     const product = this.products.find(
       (product) => product.productId === productId
     );

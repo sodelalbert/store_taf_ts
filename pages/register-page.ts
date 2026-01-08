@@ -31,35 +31,35 @@ export class RegisterPage {
     this.continueButton = page.locator(".button-1.register-continue-button");
   }
 
-  public async selectGenderMale() {
+  public async selectGenderMale(): Promise<void> {
     await this.$genderMaleRadio.click();
   }
 
-  public async fillFirstName(firstName: string) {
+  public async fillFirstName(firstName: string): Promise<void> {
     await this.$firstNameInput.fill(firstName);
   }
 
-  public async fillLastName(lastName: string) {
+  public async fillLastName(lastName: string): Promise<void> {
     await this.$lastNameInput.fill(lastName);
   }
 
-  public async fillEmail(email: string) {
+  public async fillEmail(email: string): Promise<void> {
     await this.$emailInput.fill(email);
   }
 
-  public async fillPassword(password: string) {
+  public async fillPassword(password: string): Promise<void> {
     await this.$passwordInput.fill(password);
   }
 
-  public async fillConfirmPassword(password: string) {
+  public async fillConfirmPassword(password: string): Promise<void> {
     await this.$confirmPasswordInput.fill(password);
   }
 
-  public async clickRegisterButton() {
+  public async clickRegisterButton(): Promise<void> {
     await this.$registerButton.click();
   }
 
-  public async clickContinueButton() {
+  public async clickContinueButton(): Promise<void> {
     await this.continueButton.click();
   }
 
@@ -68,7 +68,7 @@ export class RegisterPage {
     lastName: string,
     email: string,
     password: string
-  ) {
+  ): Promise<void> {
     await this.selectGenderMale();
     await this.fillFirstName(firstName);
     await this.fillLastName(lastName);
@@ -85,9 +85,9 @@ export class RegisterPage {
     return await resultLocator.isVisible();
   }
 
-  public async getValidationErrors() {
+  public async getValidationErrors(): Promise<string[]> {
     const errors = this.page.locator("span.field-validation-error");
-    const errorMessages = [];
+    const errorMessages: string[] = [];
     const count = await errors.count();
     for (let i = 0; i < count; i++) {
       errorMessages.push(await errors.nth(i).innerText());
@@ -95,7 +95,7 @@ export class RegisterPage {
     return errorMessages;
   }
 
-  public async isValidationSuccessful() {
+  public async isValidationSuccessful(): Promise<boolean> {
     const errors = await this.getValidationErrors();
     return errors.length === 0;
   }
